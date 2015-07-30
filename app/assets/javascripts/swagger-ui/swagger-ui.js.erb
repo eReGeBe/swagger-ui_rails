@@ -4004,11 +4004,14 @@ Operation.prototype.getBody = function (headers, args, opts) {
       value = formParams[key];
 
       if (typeof value !== 'undefined') {
-        if (encoded !== '') {
-          encoded += '&';
-        }
+        value = [].concat(value); // Transform the value in an array if it isn't
 
-        encoded += encodeURIComponent(key) + '=' + encodeURIComponent(value);
+        for (var i = 0; i < value.length; i++) {
+          if (encoded !== '') {
+            encoded += '&';
+          }
+          encoded += encodeURIComponent(key) + '=' + encodeURIComponent(value[i]);
+        }
       }
     }
 
